@@ -10,6 +10,7 @@ import './embla.css';
 import family1 from '../../public/family1.jpg';
 import family2 from '../../public/family2.jpeg';
 import logo from "../../public/logo.png";
+import Features from "@/components/Features";
 
 const OPTIONS: EmblaOptionsType = { loop: true }
 const SLIDE_COUNT = 5
@@ -18,16 +19,10 @@ const SLIDES = [family1, family2]
 export default function Home() {
     return (
         <>
-            <Container className="p-5">
+            <Container className="p-8">
                 <Backdrop />
-                <Card className="md:!p-10"
-                size={{
-                    lg: "5",
-                    md: "4",
-                    sm: "3",
-                    initial: "2"
-                }}>
-                    <div className="flex flex-col">
+                <div className="flex flex-col w-[-webkit-fill-available]">
+                    <div className="flex flex-col items-center">
                         <div className="flex flex-row items-center ">
                             <Avatar
                                 size={{
@@ -58,20 +53,23 @@ export default function Home() {
                         </div>
                         <div className="mt-4">
                             <Button
-                            size={{
-                                initial: "4"
-                            }}>
+                                size={{
+                                    initial: "4"
+                                }}>
                                 Find your match
                             </Button>
                         </div>
-                        <Separator className="!w-auto md:w-full m-4" />
-
-                        <Separator className="!w-auto md:w-full m-4" />
-                        <div>
-                            <EmblaCarousel slides={SLIDES} options={OPTIONS} />
-                        </div>
                     </div>
-                </Card>
+                    <Separator className="opacity-0 md:w-full m-4" />
+
+                    <Features />
+                    <Separator className="opacity-0 m-4" />
+                    {/* <div>
+                        <Card>
+                            <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+                        </Card>
+                    </div> */}
+                </div>
             </Container>
         </>
     )

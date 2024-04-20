@@ -1,3 +1,6 @@
+/node_modules
+.DS_Store
+
 backend/node_modules/.package-lock.json
 backend/node_modules/.bin/mime
 backend/node_modules/accepts/HISTORY.md

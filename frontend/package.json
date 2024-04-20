@@ -9,10 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-form": "^0.0.3",
+    "@radix-ui/themes": "^3.0.2",
+    "clsx": "^2.1.0",
+    "embla-carousel": "^8.0.2",
+    "embla-carousel-autoplay": "^8.0.2",
+    "embla-carousel-react": "^8.0.2",
     "next": "14.2.2",
+    "next-themes": "^0.3.0",
     "node.js": "^0.0.1-security",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "^20",

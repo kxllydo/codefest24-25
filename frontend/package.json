@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-form": "^0.0.3",
     "@radix-ui/themes": "^3.0.2",

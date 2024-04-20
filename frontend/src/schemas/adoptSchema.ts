@@ -1,7 +1,8 @@
 import z from "zod";
 
 export const adoptSchema = z.object({
-    age: z.number()
+    gender: z.string()
 });
 
-export type User = z.infer<typeof adoptSchema>;
+export type AdoptSchemaType = z.infer<typeof adoptSchema>;
+

@@ -1,3 +1,4 @@
+"use client";
 import Backdrop from "@/components/Backdrop";
 import Container from "@/components/Container";
 import Prompt from "@/components/Prompt";
@@ -53,6 +54,11 @@ export default function Home() {
                         </div>
                         <div className="mt-4">
                             <Button
+                            className="hover:cursor-pointer"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.location.href = "/match";
+                            }}
                                 size={{
                                     initial: "4"
                                 }}>

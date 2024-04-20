@@ -1,56 +1,56 @@
-import { Button, Select } from "@radix-ui/themes"
-import { FormEvent, FormEventHandler } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import * as z from "zod";
+import { Button, Card, Select } from "@radix-ui/themes";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { adoptSchema } from "@/schemas/adoptSchema";
+import * as z from "zod";
+import { AdoptSchemaType, adoptSchema } from "@/schemas/adoptSchema";
+import { SelectInput } from "./SelectInput";
+
+const testSchema = z.object({
+    test: z.string()
+});
 
 const AdoptForm = () => {
-    const router = useRouter();
-    const {
-        handleSubmit,
-        register,
-        formState: { errors, isSubmitting, isDirty, isValid },
-    } = useForm<FormData>({
+    const methods = useForm<AdoptSchemaType>({
         resolver: zodResolver(adoptSchema),
     });
+    const {
+        handleSubmit,
+        formState: { errors },
+    } = methods;
 
-    async function onSubmit(data: FormData) {
-        console.log(isSubmitting);
+    const onSubmit: SubmitHandler<AdoptSchemaType> = (data) => {
         console.log(data);
-        // Replace this with a server action or fetch an API endpoint to authenticate
-        await new Promise<void>((resolve) => {
-            setTimeout(() => {
-                resolve();
-            }, 2000); // 2 seconds in milliseconds
-        });
-        router.push("/tweets");
-    }
+    };
+
+    const genderOptions = [
+        {
+            value: "male",
+            label: "Male",
+        },
+        {
+            value: "female",
+            label: "Female",
+        },
+    ];
+
+    console.log("Errors:", errors);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Select.Root>
-                <Select.Trigger />
-                <Select.Content>
-                    <Select.Group>
-                        <Select.Label>Fruits</Select.Label>
-                        <Select.Item value="orange">Orange</Select.Item>
-                        <Select.Item value="apple">Apple</Select.Item>
-                        <Select.Item value="grape" disabled>
-                            Grape
-                        </Select.Item>
-                    </Select.Group>
-                    <Select.Separator />
-                    <Select.Group>
-                        <Select.Label>Vegetables</Select.Label>
-                        <Select.Item value="carrot">Carrot</Select.Item>
-                        <Select.Item value="potato">Potato</Select.Item>
-                    </Select.Group>
-                </Select.Content>
-            </Select.Root>
-            <Button type="submit">Submit</Button>
-        </form>
+        <FormProvider {...methods}>
+            <Card>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <SelectInput
+                        name="gender"
+                        label="Select Gender"
+                        showName="Gender"
+                        errors={errors}
+                        options={genderOptions}
+                    />
+                    <Button type="submit">Submit</Button>
+                </form>
+            </Card>
+        </FormProvider>
     );
 };
 

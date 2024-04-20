@@ -2,40 +2,35 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 import random
 import sqlite3
+import csv
+from generate_data import generate_data
+from sklearn.preprocessing import StandardScaler
 
+#
 # Load the CSV file
 data = pd.read_csv('data.csv')
 
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn import datasets
 
-X = data[data.columns.difference(['Compatibility'])]
-y = data['Compatibility']
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(data.iloc[:, :-1], data.iloc[:, -1], test_size=0.04, random_state=259)
 
-# a decision tree classifier
-clf = DecisionTreeClassifier()
+# Assuming X_train is your training data
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
 
-# Train the classifier on the data
-clf.fit(X, y)
+# Create an MLPClassifier (neural network) model
+model = MLPClassifier(hidden_layer_sizes=(26,), max_iter=1000, random_state=259)
 
-ethnicities = ['African', 'African American', 'Arab', 'Asian', 'Caribbean', 'European', 'Hispanic/Latino', 'Indigenous', 'Middle Eastern', 'Native American', 'Pacific Islander', 'South Asian', 'Southeast Asian']
+# Train the model on the training data
+model.fit(X_train_scaled, y_train)
 
-num_of_test_parents = 100
+# Make predictions on the test data
+y_pred = model.predict(X_test)
 
-test_parents = []
-for _ in range(num_of_test_parents):
-    test_parents.append([random.randint(18, 90), random.randint(0,1), random.randint(1, len(ethnicities)), random.randint(501, 99950), random.randint(0,1), random.randint(25750, 154500), random.randint(1,20), random.randint(1,10)])
-
-
-conn = sqlite3.connect('data.db')
-cursor = conn.cursor()
-
-cursor.execute("SELECT KidAge, KidGender, KidEthnicity, KidLocation, KidHobbies, KidHealthConditions, KidNumberSiblings, KidEducation FROM current_children;")
-conn.commit()
-current_children = cursor.fetchall()
-
-test_data = [list(x) + y for x, y in zip(current_children, test_parents)]
-
-
-accuracy = clf.score(test_data, y)
-print(accuracy)
-
-conn.close()
+# Evaluate the model
+accuracy = np.mean(y_pred == y_test)
+print(f"Accuracy: {accuracy}")

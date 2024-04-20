@@ -5,6 +5,7 @@ import sqlite3
 import csv
 from generate_data import generate_data
 from sklearn.preprocessing import StandardScaler
+import pickle
 
 #
 # Load the CSV file
@@ -34,3 +35,8 @@ y_pred = model.predict(X_test)
 # Evaluate the model
 accuracy = np.mean(y_pred == y_test)
 print(f"Accuracy: {accuracy}")
+
+
+# save
+with open('model.pkl','wb') as f:
+    pickle.dump(model,f)

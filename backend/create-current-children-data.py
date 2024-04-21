@@ -1,23 +1,19 @@
 import random
+import csv
 import sqlite3
+from generate_data import generate_data
 
+save_csv = True
 
-  
-num_of_samples = 100
+num_of_samples = 750
 
-ethnicities = ['African', 'African American', 'Arab', 'Asian', 'Caribbean', 'European', 'Hispanic/Latino', 'Indigenous', 'Middle Eastern', 'Native American', 'Pacific Islander', 'South Asian', 'Southeast Asian']
+if save_csv:
+    headers = ["Kid Age", "Kid Gender", "Kid Ethnicity", "Kid Location", "Kid Number of Siblings", "Disability"]
+    data = generate_data(num_of_samples)
 
-data = []
+    data = [[row[0], row[1], row[2], row[3], row[4], row[5]] for row in data]
 
-for _ in range(num_of_samples):
-    data.append([random.randint(1, 18), random.randint(0,1), random.randint(1, len(ethnicities)), random.randint(501, 99950), random.randint(1, 10), random.randint(1,10), random.randint(0,5), random.randint(1,4)])
-
-
-conn = sqlite3.connect('data.db')
-cursor = conn.cursor()
-
-cursor.execute('''CREATE TABLE IF NOT EXISTS current_children
-                (id INTEGER PRIMARY KEY, KidAge INTEGER, KidGender INTEGER, KidEthnicity INTEGER, KidLocation INTEGER, KidHobbies INTEGER, KidHealthConditions INTEGER, KidNumberSiblings INTEGER, KidEducation INTEGER)''')
-cursor.executemany("INSERT INTO current_children (KidAge, KidGender, KidEthnicity, KidLocation, KidHobbies, KidHealthConditions, KidNumberSiblings, KidEducation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", data)
-conn.commit()
-conn.close()
+    data.insert(0, headers)
+    with open("available_adoptees.csv", mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)

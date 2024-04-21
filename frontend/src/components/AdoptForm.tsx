@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Progress, Select, Spinner } from "@radix-ui/themes";
+import { Avatar, Badge, Button, Card, DataList, Flex, Progress, Select, Separator, Spinner, Text } from "@radix-ui/themes";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -8,10 +8,11 @@ import { SelectInput } from "./SelectInput";
 import { Input } from "./Input";
 import { useState } from "react";
 import { AdopteeResponseData } from "@/types";
-import { adoptionFacts, ethnicityOptions, genderOptions, wait } from "@/lib/utils";
+import { adoptionFacts, ethnicityOptions, genderOptions, getImage, wait } from "@/lib/utils";
 import duckflying from "../../public/duckflyinggif.gif";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Frown } from "lucide-react";
 
 const adoptionFactIndex = Math.floor(Math.random() * adoptionFacts.length);
 
@@ -23,6 +24,7 @@ const AdoptForm = () => {
     const [clickSubmit, setClickSubmit] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [result, setResult] = useState<AdopteeResponseData | null>(null);
 
     const methods = useForm<AdoptSchemaType>({
         resolver: zodResolver(adoptSchema),
@@ -34,14 +36,12 @@ const AdoptForm = () => {
 
     const onSubmit: SubmitHandler<AdoptSchemaType> = async (data) => {
         setClickSubmit(true);
-        console.log(data);
-        console.log('hi')
         await wait(1000);
         setSubmitting(true);
-        console.log(submitting)
         const match = await findMatch(data);
+        await wait(5000);
         // TODO: When done testing, uncomment the line below
-        // setSubmitted(true);
+        setSubmitted(true);
     }
 
     const findMatch = async (data: AdoptSchemaType) => {
@@ -66,31 +66,82 @@ const AdoptForm = () => {
                 throw new Error(`HTTP error! Status: ${res.status}`);
             }
             const json = await res.json() as AdopteeResponseData;
-            console.log(json);
-            if (json.adoptee_info) {
-                console.log("Match found!");
-                console.log(json.adoptee_info);
-            }
+            setResult(json);
         } catch (err) {
             console.error(err);
             return null;
         }
     };
 
-    // TODO: Remove this once done testing
-    console.log("Errors:", errors);
-
     return (
         <>
             {submitted && (
                 <motion.div>
-                    <Card>
-                        <Avatar
-                            fallback="A"
-                            radius="full"
-                            color="purple"
-                        />
-                    </Card>
+                    {result?.adoptee_info ?
+                        <>
+                            <Card
+                                size={{
+                                    lg: "5",
+                                    initial: "3"
+                                }}>
+                                <Text className="text-2xl flex justify-center mb-4">Your match</Text>
+
+                                <div className="flex justify-center">
+                                    <Avatar
+                                        fallback="A"
+                                        radius="large"
+                                        color="purple"
+                                        src={getImage(result.adoptee_info.Ethnicity, result.adoptee_info.Gender === 0 ? "female" : "male")?.src}
+                                        size={{
+                                            initial: "7"
+                                        }}
+                                    />
+                                </div>
+                                <div className="m-4 items-center flex flex-col">
+                                    <Badge color="jade" variant="soft" radius="full">
+                                        <span className="text-lg">Verified</span>
+                                    </Badge>
+                                    <DataList.Root className="!text-lg mt-4">
+                                        <DataList.Item align="center">
+                                            <DataList.Label minWidth="88px">Age</DataList.Label>
+                                            <DataList.Value>{result.adoptee_info.Age}</DataList.Value>
+                                        </DataList.Item>
+                                        <DataList.Item>
+                                            <DataList.Label minWidth="88px">Ethnicity</DataList.Label>
+                                            <DataList.Value>{ethnicityOptions.find(e => result.adoptee_info?.Ethnicity === e.value)?.label}</DataList.Value>
+                                        </DataList.Item>
+                                        <DataList.Item>
+                                            <DataList.Label minWidth="88px">Gender</DataList.Label>
+                                            <DataList.Value>{result.adoptee_info.Gender === 0 ? "Female" : "Male"}</DataList.Value>
+                                        </DataList.Item>
+                                        <DataList.Item>
+                                            <DataList.Label minWidth="88px">Has Siblings</DataList.Label>
+                                            <DataList.Value>{result.adoptee_info.NumberofSiblings === 0 ? "No" : "Yes"}</DataList.Value>
+                                        </DataList.Item>
+                                        <DataList.Item>
+                                            <DataList.Label minWidth="88px">Has a Disability</DataList.Label>
+                                            <DataList.Value>{result.adoptee_info.Disability === 0 ? "No" : "Yes"}</DataList.Value>
+                                        </DataList.Item>
+                                    </DataList.Root>
+                                </div>
+                            </Card>
+                        </>
+                        :
+                        <>
+                            <Card className="flex flex-col max-w-96"
+                                size={{
+                                    initial: "3"
+                                }}>
+                                <Text className="text-4xl flex flex-row items-center justify-center"><Frown className="mr-2" />No match found</Text>
+                                <Separator className="m-4 !w-[-webkit-fill-available]" />
+                                <span className="text-lg text-center flex items-center">There was no match found for you at the time. Please try again later.</span>
+                                <Separator className="m-4 !w-[-webkit-fill-available] !opacity-0" />
+                                <span className="text-sm text-center">We only match you with kids that most perfectly fit your description,
+                                    which is why you are much more likely to adopt
+                                    through <Text color="blue">Adopteam</Text> than any resource.
+                                </span>
+                            </Card>
+                        </>}
                 </motion.div>
             )}
             {!submitted && (
@@ -117,20 +168,28 @@ const AdoptForm = () => {
                     </motion.div>
                     :
                     <FormProvider {...methods}>
-                        <Card className="w-96"
+                        <Card className=""
                             size={{
                                 initial: "4"
                             }}>
+                            <span className="text-2xl">Your info</span>
+                            <Separator className="m-4 !w-[-webkit-fill-available]" />
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="flex flex-row gap-3">
                                     <div>
-                                        <span className="text-lg">Your Info</span>
                                         <SelectInput
                                             name="gender"
                                             label="Select Gender"
                                             showName="Gender"
                                             errors={errors}
                                             options={genderOptions}
+                                        />
+                                        <SelectInput
+                                            name="ethnicity"
+                                            label="Ethnicity"
+                                            showName="Ethnicity"
+                                            errors={errors}
+                                            options={ethnicityOptions}
                                         />
                                         <Input
                                             name="age"
@@ -139,13 +198,10 @@ const AdoptForm = () => {
                                             type="number"
                                             errors={errors}
                                         />
-                                        <SelectInput
-                                            name="ethnicity"
-                                            label="Ethnicity"
-                                            showName="Ethinity"
-                                            errors={errors}
-                                            options={ethnicityOptions}
-                                        />
+
+
+                                    </div>
+                                    <div>
                                         <Input
                                             name="location"
                                             label="Postal Code"
@@ -160,49 +216,57 @@ const AdoptForm = () => {
                                             type="text"
                                             errors={errors}
                                         />
-                                        <Input
-                                            name="marital_status"
-                                            label="Marital Status"
-                                            showName=""
-                                            type="checkbox"
-                                            errors={errors}
-                                        />
-                                        <Input
-                                            name="employed"
-                                            label="Employment Status"
-                                            showName="11111"
-                                            type="checkbox"
-                                            errors={errors}
-                                        />
-                                    </div>
-                                    <div>
-                                        <span className="text-lg">Kid Info</span>
-                                        <Input
-                                            name="disabled"
-                                            label="Disabled"
-                                            showName=""
-                                            type="checkbox"
-                                            errors={errors}
-                                        />
                                     </div>
                                 </div>
-                                <Button
-                                    type="submit"
-                                    variant="solid"
-                                    className="!mt-4"
-                                    size={{
-                                        initial: "3",
-                                    }}
-                                >
-                                    {clickSubmit ?
-                                        <Spinner />
-                                        :
-                                        <span>Submit</span>}
-                                </Button>
+                                <Separator className="m-4 !w-[-webkit-fill-available]" />
+                                <div className="flex gap-3 flex-col">
+                                    <Input
+                                        name="marital_status"
+                                        label="Marital Status"
+                                        showName=""
+                                        type="checkbox"
+                                        className="flex flex-row gap-3 items-center"
+                                        errors={errors}
+                                    />
+                                    <Input
+                                        name="employed"
+                                        label="Employment Status"
+                                        showName="11111"
+                                        type="checkbox"
+                                        className="flex flex-row gap-3 items-center"
+
+                                        errors={errors}
+                                    />
+                                    <Input
+                                        name="disabled"
+                                        label="Disabled"
+                                        showName=""
+                                        type="checkbox"
+                                        className="flex flex-row gap-3 items-center"
+
+                                        errors={errors}
+                                    />
+                                </div>
+                                <div className="flex items-center mt-4">
+                                    <Button
+                                        type="submit"
+                                        variant="solid"
+                                        size={{
+                                            initial: "3",
+                                        }}
+                                    >
+                                        {clickSubmit ?
+                                            <Spinner />
+                                            :
+                                            <span>Submit</span>}
+                                    </Button>
+                                    <Badge className="ml-2" color="jade" variant="soft" radius="full">
+                                        <span className="text-sm">Secure</span>
+                                    </Badge>
+                                </div>
                             </form>
                         </Card>
                     </FormProvider>
-
             )}
         </>
     );

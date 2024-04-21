@@ -33,3 +33,19 @@ export interface SelectProps extends InputProps {
 export interface ReactSelectProps extends SelectProps {
     isMulti: boolean;
 }
+export interface AdopteeInfo {
+    Age: number;
+    Disability: number;
+    Ethnicity: string;
+    Gender: number;
+    Latitude: number;
+    Location: number;
+    Longitude: number;
+    NumberofSiblings: number;
+}
+
+export interface AdopteeResponseData {
+    adoptee_info?: AdopteeInfo;
+    message?: string;
+    status_code: number;
+}

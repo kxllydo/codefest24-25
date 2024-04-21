@@ -21,7 +21,6 @@ const Page = () => {
                         }}
                         className="flex flex-col items-center"
                         >
-                        <div className="text-4xl text-purple-400 mb-4">Find <span className="font-bold">Your</span> Match</div>
                         <AdoptForm />
                     </motion.div>
                 </div>

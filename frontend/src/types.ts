@@ -3,19 +3,14 @@ import { FieldErrors } from "react-hook-form";
 
 type AdoptFieldName =
     | "gender"
-//   | "middleName"
-//   | "lastName"
-//   | "birthDate"
-//   | "gender"
-//   | "phoneNumber"
-//   | "email"
-//   | "startAt"
-//   | "endAt"
-//   | "jobPosition"
-//   | "teams"
-//   | "designation"
-//   | "billable"
-//   | "billableHours";
+    | "age"
+    | "ethnicity"
+    | "location"
+    | "marital_status"
+    | "income"
+    | "employed"
+    | "disabled";
+
 export interface InputErrorProps {
     name: AdoptFieldName;
     errors: FieldErrors<AdoptSchemaType>;
@@ -23,7 +18,7 @@ export interface InputErrorProps {
 
 export interface InputProps extends InputErrorProps {
     label: string;
-    type?: "text" | "email" | "time";
+    type?: "text" | "email" | "time" | "number" | "checkbox";
     placeholder?: string;
     showName: string;
 }

@@ -18,8 +18,10 @@ const Page = () => {
                             delay: 0.5,
                             duration: 1,
                             ease: [0, 0.71, 0.2, 1.01]
-                        }}>
-                        <div className="text-6xl font-bold text-purple-400">Find Your Match</div>
+                        }}
+                        className="flex flex-col items-center"
+                        >
+                        <div className="text-4xl text-purple-400 mb-4">Find <span className="font-bold">Your</span> Match</div>
                         <AdoptForm />
                     </motion.div>
                 </div>

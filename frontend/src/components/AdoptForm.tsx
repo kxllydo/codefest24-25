@@ -1,4 +1,4 @@
-import { Button, Card, Progress, Select, Spinner } from "@radix-ui/themes";
+import { Avatar, Button, Card, Progress, Select, Spinner } from "@radix-ui/themes";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -8,7 +8,7 @@ import { SelectInput } from "./SelectInput";
 import { Input } from "./Input";
 import { useState } from "react";
 import { AdopteeResponseData } from "@/types";
-import { adoptionFacts, wait } from "@/lib/utils";
+import { adoptionFacts, ethnicityOptions, genderOptions, wait } from "@/lib/utils";
 import duckflying from "../../public/duckflyinggif.gif";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -77,60 +77,6 @@ const AdoptForm = () => {
         }
     };
 
-    const genderOptions = [
-        {
-            value: "male",
-            label: "Male",
-        },
-        {
-            value: "female",
-            label: "Female",
-        },
-    ];
-
-    const ethnicityOptions = [
-        {
-            value: "african_american",
-            label: "African American",
-        },
-        {
-            value: "arab",
-            label: "Arab",
-        },
-        {
-            value: "asian",
-            label: "Asian",
-        },
-        {
-            value: "caribbean",
-            label: "Caribbean",
-        },
-        {
-            value: "caucasian",
-            label: "Caucasian",
-        },
-        {
-            value: "hispanic_latino",
-            label: "Hispanic/Latino",
-        },
-        {
-            value: "indigenous",
-            label: "Indigenous",
-        },
-        {
-            value: "middle_eastern",
-            label: "Middle Eastern",
-        },
-        {
-            value: "native_american",
-            label: "Native American",
-        },
-        {
-            value: "pacific_islander",
-            label: "Pacific Islander",
-        }
-    ];
-
     // TODO: Remove this once done testing
     console.log("Errors:", errors);
 
@@ -138,117 +84,124 @@ const AdoptForm = () => {
         <>
             {submitted && (
                 <motion.div>
+                    <Card>
+                        <Avatar
+                            fallback="A"
+                            radius="full"
+                            color="purple"
+                        />
+                    </Card>
                 </motion.div>
             )}
             {!submitted && (
                 submitting ?
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{
-                        delay: 0.5,
-                        duration: 1,
-                        ease: [0, 0.71, 0.2, 1.01]
-                    }}
-                    className="flex flex-col items-center max-w-96">
-                    <span className="text-4xl">Finding the one for you</span>
-                    <Progress 
-                    size={{
-                        md: "3",
-                        initial: "2"
-                    }}
-                    duration="5s"
-                    variant="classic"
-                    className="w-[-webkit-fill-available] m-6"/>
-                    <span className="italic text-gray-600 text-center">{adoptionFacts[adoptionFactIndex].fact}</span>
-                </motion.div>
-                :
-                <FormProvider {...methods}>
-                    <Card className="w-96"
-                        size={{
-                            initial: "4"
-                        }}>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="flex flex-row gap-3">
-                                <div>
-                                    <span className="text-lg">Your Info</span>
-                                    <SelectInput
-                                        name="gender"
-                                        label="Select Gender"
-                                        showName="Gender"
-                                        errors={errors}
-                                        options={genderOptions}
-                                    />
-                                    <Input
-                                        name="age"
-                                        label="Age"
-                                        showName="Age"
-                                        type="number"
-                                        errors={errors}
-                                    />
-                                    <SelectInput
-                                        name="ethnicity"
-                                        label="Ethnicity"
-                                        showName="Ethinity"
-                                        errors={errors}
-                                        options={ethnicityOptions}
-                                    />
-                                    <Input
-                                        name="location"
-                                        label="Postal Code"
-                                        showName="11111"
-                                        type="text"
-                                        errors={errors}
-                                    />
-                                    <Input
-                                        name="income"
-                                        label="Income"
-                                        showName="11111"
-                                        type="text"
-                                        errors={errors}
-                                    />
-                                    <Input
-                                        name="marital_status"
-                                        label="Marital Status"
-                                        showName=""
-                                        type="checkbox"
-                                        errors={errors}
-                                    />
-                                    <Input
-                                        name="employed"
-                                        label="Employment Status"
-                                        showName="11111"
-                                        type="checkbox"
-                                        errors={errors}
-                                    />
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                            delay: 0.5,
+                            duration: 1,
+                            ease: [0, 0.71, 0.2, 1.01]
+                        }}
+                        className="flex flex-col items-center max-w-96">
+                        <span className="text-4xl">Finding the one for you</span>
+                        <Progress
+                            size={{
+                                md: "3",
+                                initial: "2"
+                            }}
+                            duration="5s"
+                            variant="classic"
+                            className="w-[-webkit-fill-available] m-6" />
+                        <span className="italic text-gray-600 text-center">{adoptionFacts[adoptionFactIndex].fact}</span>
+                    </motion.div>
+                    :
+                    <FormProvider {...methods}>
+                        <Card className="w-96"
+                            size={{
+                                initial: "4"
+                            }}>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="flex flex-row gap-3">
+                                    <div>
+                                        <span className="text-lg">Your Info</span>
+                                        <SelectInput
+                                            name="gender"
+                                            label="Select Gender"
+                                            showName="Gender"
+                                            errors={errors}
+                                            options={genderOptions}
+                                        />
+                                        <Input
+                                            name="age"
+                                            label="Age"
+                                            showName="Age"
+                                            type="number"
+                                            errors={errors}
+                                        />
+                                        <SelectInput
+                                            name="ethnicity"
+                                            label="Ethnicity"
+                                            showName="Ethinity"
+                                            errors={errors}
+                                            options={ethnicityOptions}
+                                        />
+                                        <Input
+                                            name="location"
+                                            label="Postal Code"
+                                            showName="11111"
+                                            type="text"
+                                            errors={errors}
+                                        />
+                                        <Input
+                                            name="income"
+                                            label="Income"
+                                            showName="11111"
+                                            type="text"
+                                            errors={errors}
+                                        />
+                                        <Input
+                                            name="marital_status"
+                                            label="Marital Status"
+                                            showName=""
+                                            type="checkbox"
+                                            errors={errors}
+                                        />
+                                        <Input
+                                            name="employed"
+                                            label="Employment Status"
+                                            showName="11111"
+                                            type="checkbox"
+                                            errors={errors}
+                                        />
+                                    </div>
+                                    <div>
+                                        <span className="text-lg">Kid Info</span>
+                                        <Input
+                                            name="disabled"
+                                            label="Disabled"
+                                            showName=""
+                                            type="checkbox"
+                                            errors={errors}
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <span className="text-lg">Kid Info</span>
-                                    <Input
-                                        name="disabled"
-                                        label="Disabled"
-                                        showName=""
-                                        type="checkbox"
-                                        errors={errors}
-                                    />
-                                </div>
-                            </div>
-                            <Button
-                                type="submit"
-                                variant="solid"
-                                className="!mt-4"
-                                size={{
-                                    initial: "3",
-                                }}
-                            >
-                                {clickSubmit ?
-                                    <Spinner />
-                                    :
-                                    <span>Submit</span>}
-                            </Button>
-                        </form>
-                    </Card>
-                </FormProvider>
+                                <Button
+                                    type="submit"
+                                    variant="solid"
+                                    className="!mt-4"
+                                    size={{
+                                        initial: "3",
+                                    }}
+                                >
+                                    {clickSubmit ?
+                                        <Spinner />
+                                        :
+                                        <span>Submit</span>}
+                                </Button>
+                            </form>
+                        </Card>
+                    </FormProvider>
 
             )}
         </>

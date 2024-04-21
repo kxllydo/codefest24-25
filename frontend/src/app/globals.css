@@ -18,6 +18,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+html {
+    background: white;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

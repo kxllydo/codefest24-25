@@ -22,7 +22,7 @@ export default function Home() {
         <>
             <Container className="p-8">
                 <Backdrop />
-                <div className="flex flex-col w-[-webkit-fill-available] h-[-webkit-fill-available]">
+                <div className="flex flex-col w-[-webkit-fill-available] h-[-webkit-fill-available] md:h-auto">
                     <div className="flex flex-col items-center">
                         <div className="flex flex-row items-center ">
                             <Avatar
@@ -50,7 +50,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="mt-4">
-                            <p className="text-xl">{"Dedicated to finding loving homes for children in need through the power of AI."}</p>
+                            <p className="text-xl text-center">{"Dedicated to finding loving homes for children in need through the power of AI."}</p>
                         </div>
                         <div className="mt-4">
                             <Button
@@ -62,7 +62,7 @@ export default function Home() {
                                 size={{
                                     initial: "4"
                                 }}>
-                                Find your match
+                                Submit
                             </Button>
                         </div>
                     </div>

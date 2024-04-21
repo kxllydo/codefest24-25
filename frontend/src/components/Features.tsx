@@ -13,7 +13,7 @@ const Features = () => {
                     <div>Utilize cutting-edge AI algorithms to match children with prospective parents based on compatibility factors such as location, preferences, and more.</div>
                 </div>
             </Card>
-            <Card className="bg-indigo-500 w-80"
+            <Card className="bg-blue-600 w-80"
             size={{
                 initial: "3"
             }}>
@@ -22,7 +22,7 @@ const Features = () => {
                     <div>Keep users informed with real-time updates on available children and prospective parents, ensuring they have the latest information to make informed decisions.</div>
                 </div>
             </Card>
-            <Card className="bg-sky-700 w-80"
+            <Card className="bg-indigo-700 w-80"
             size={{
                 initial: "3"
             }}>

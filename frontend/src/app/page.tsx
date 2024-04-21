@@ -13,6 +13,7 @@ import family2 from '../../public/family2.jpeg';
 import logo from "../../public/logo.png";
 import Features from "@/components/Features";
 import { AreaChart, Cog, SquareUserRound, Verified } from "lucide-react";
+import { motion } from "framer-motion";
 
 const OPTIONS: EmblaOptionsType = { loop: true }
 const SLIDE_COUNT = 5
@@ -68,45 +69,53 @@ export default function Home() {
                         </div>
                     </div>
                     <Separator className="opacity-0 md:w-full m-4" />
-
-                    <Grid 
-                    columns={{
-                        lg: "4",
-                        md: "2",
-                        sm: "2",
-                        initial: "1"
-                    }} 
-                    gap="3"
-                    className="pb-2">
-                        <Card className="flex flex-col"
-                            size={{
-                                initial: "2"
-                            }}>
-                            <div className="flex font-bold text-lg"><Cog className="mr-2" />{"Advanced Matching Algorithm"}</div>
-                            <Text>Utilize cutting-edge AI algorithms to match children with prospective parents based on compatibility factors such as location, preferences, and more.</Text>
-                        </Card>
-                        <Card className=""
-                            size={{
-                                initial: "2"
-                            }}>
-                            <div className="flex font-bold text-lg"><AreaChart className="mr-2" />{"Real-time Updates"}</div>
-                            <Text>Keep users informed with real-time updates on available children and prospective parents, ensuring they have the latest information to make informed decisions.</Text>
-                        </Card>
-                        <Card className=" "
-                            size={{
-                                initial: "2"
-                            }}>
-                            <div className="flex font-bold"><SquareUserRound className="mr-2" />{"Customized Filtering Options"}</div>
-                            <Text>{"Our platform offers advanced filtering options for both children and adults, allowing you to narrow down your search based on specific criteria such as age, gender, ethnicity, location, and more."}</Text>
-                        </Card>
-                        <Card className=" "
-                            size={{
-                                initial: "2"
-                            }}>
-                            <div className="flex font-bold"><Verified className="mr-2" />{"Verified Profiles"}</div>
-                            <Text>{"Implement a verification process to ensure the authenticity of user profiles, enhancing trust and credibility within the community."}</Text>
-                        </Card>
-                    </Grid>
+                    <motion.div
+                        initial={{ opacity: 0, y: 150 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{
+                            delay: 0.5,
+                            duration: 1,
+                            ease: [0, 0.71, 0.2, 1.01]
+                        }}>
+                        <Grid
+                            columns={{
+                                lg: "4",
+                                md: "2",
+                                sm: "2",
+                                initial: "1"
+                            }}
+                            gap="3"
+                            className="pb-2">
+                            <Card className="flex flex-col"
+                                size={{
+                                    initial: "2"
+                                }}>
+                                <div className="flex font-bold text-lg"><Cog className="mr-2" />{"Advanced Matching Algorithm"}</div>
+                                <Text>Utilize cutting-edge AI algorithms to match children with prospective parents based on compatibility factors such as location, preferences, and more.</Text>
+                            </Card>
+                            <Card className=""
+                                size={{
+                                    initial: "2"
+                                }}>
+                                <div className="flex font-bold text-lg"><AreaChart className="mr-2" />{"Real-time Updates"}</div>
+                                <Text>Keep users informed with real-time updates on available children and prospective parents, ensuring they have the latest information to make informed decisions.</Text>
+                            </Card>
+                            <Card className=" "
+                                size={{
+                                    initial: "2"
+                                }}>
+                                <div className="flex font-bold"><SquareUserRound className="mr-2" />{"Customized Filtering Options"}</div>
+                                <Text>{"Our platform offers advanced filtering options for both children and adults, allowing you to narrow down your search based on specific criteria such as age, gender, ethnicity, location, and more."}</Text>
+                            </Card>
+                            <Card className=" "
+                                size={{
+                                    initial: "2"
+                                }}>
+                                <div className="flex font-bold"><Verified className="mr-2" />{"Verified Profiles"}</div>
+                                <Text>{"Implement a verification process to ensure the authenticity of user profiles, enhancing trust and credibility within the community."}</Text>
+                            </Card>
+                        </Grid>
+                    </motion.div>
                     <Separator className="opacity-0 m-4" />
                     {/* <div>
                         <Card>

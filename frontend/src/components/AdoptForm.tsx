@@ -20,9 +20,40 @@ const AdoptForm = () => {
         formState: { errors },
     } = methods;
 
-    const onSubmit: SubmitHandler<AdoptSchemaType> = (data) => {
+    const onSubmit: SubmitHandler<AdoptSchemaType> = async (data) => {
         console.log(data);
-    };
+        await findMatch(data);
+    }
+
+    const findMatch = async (data: AdoptSchemaType) => {
+        try {
+            const res = await fetch(`http://127.0.0.1:3001/match`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(
+                    {
+                        "age": data.age,
+                        "gender": data.gender === "Female" ? 0 : 1,
+                        "ethnicity": data.ethnicity,
+                        "location": data.location,
+                        "marital_status": data.marital_status ? 1 : 0,
+                        "income": data.income,
+                        "employed": data.employed ? 1 : 0,
+                        "disabled": data.disabled ? 1 : 0,
+                    }
+                )
+            });
+            const json = await res.json();
+            console.log(json);
+            return json;
+        } catch(err) {
+            console.error(err);
+            return null;
+        }
+
+    }
 
     const genderOptions = [
         {

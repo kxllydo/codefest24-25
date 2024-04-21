@@ -9,7 +9,7 @@ const Features = () => {
                 initial: "3"
             }}>
                 <div className="flex flex-col">
-                    <div className="flex font-bold"><Cog />{" Advanced Matching Algorithm"}</div>
+                    <div className="flex font-bold"><Cog className="mr-2"/>{"Advanced Matching Algorithm"}</div>
                     <div>Utilize cutting-edge AI algorithms to match children with prospective parents based on compatibility factors such as location, preferences, and more.</div>
                 </div>
             </Card>
@@ -18,16 +18,16 @@ const Features = () => {
                 initial: "3"
             }}>
                 <div className="flex flex-col">
-                    <div className="flex font-bold"><AreaChart />{" Real-time Updates"}</div>
+                    <div className="flex font-bold"><AreaChart className="mr-2" />{"Real-time Updates"}</div>
                     <div>Keep users informed with real-time updates on available children and prospective parents, ensuring they have the latest information to make informed decisions.</div>
                 </div>
             </Card>
-            <Card className="bg-sky-500 w-80"
+            <Card className="bg-sky-700 w-80"
             size={{
                 initial: "3"
             }}>
                 <div className="flex flex-col">
-                    <div className="flex font-bold"><SquareUserRound />{" Customized Filtering Options"}</div>
+                    <div className="flex font-bold"><SquareUserRound className="mr-2"/>{"Customized Filtering Options"}</div>
                     <div>{"Our platform offers advanced filtering options for both children and adults, allowing you to narrow down your search based on specific criteria such as age, gender, ethnicity, location, and more."}</div>
                 </div>
             </Card>

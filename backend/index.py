@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 import pandas as pd
 model = joblib.load('model.pkl')
 from flask_cors import CORS
+from geopy.geocoders import Nominatim
 
 app = Flask(__name__)
 CORS(app)
@@ -29,6 +30,8 @@ ethnicities = [
     'native_american',   # 8
     'pacific_islander'   # 9
 ]
+
+geolocator = Nominatim(user_agent="my_geocoder")
 
 @app.route('/match', methods=['POST'])
 def match():
@@ -73,6 +76,15 @@ def match():
         selected_adoptee = compatible_adoptees.sample(n=1)
         selected_adoptee_dict = selected_adoptee.to_dict(orient='records')[0]
         child_data = {key.replace('Kid ', '').replace(" ", ""): value for key, value in selected_adoptee_dict.items() if key.startswith('Kid ')}
+        postal_code = child_data.get("Location")  # assuming "Location" has the postal code
+        if postal_code:
+            location = geolocator.geocode(f"{postal_code}, USA")  # Assuming USA, adjust as necessary
+            if location:
+                child_data['Latitude'] = location.latitude
+                child_data['Longitude'] = location.longitude
+            else:
+                child_data['Latitude'] = 'Not found'
+                child_data['Longitude'] = 'Not found'
 
         response = {'adoptee_info': child_data, 'status_code': 200}
     else:

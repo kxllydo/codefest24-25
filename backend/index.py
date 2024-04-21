@@ -1,7 +1,6 @@
 import joblib
-from flask import request, jsonify
+from flask import Flask, request, jsonify
 import pandas as pd
-
 model = joblib.load('model.pkl')
 
 app = Flask(__name__)
@@ -33,7 +32,7 @@ def match():
     #concat the parent attributes with each row of the children
     #use ML model to predict classification
     #find the first child that yields 1 for teh classifciation
-    
+
     parent_data = request.json
     parent_df = pd.DataFrame(parent_data, index=[0])
 
@@ -54,5 +53,6 @@ def match():
         return jsonify(selected_adoptee_dict)
     else:
         return jsonify({'message': 'No compatible adoptees found'})
+
 if __name__ == '__main__':
     app.run(port=3001)

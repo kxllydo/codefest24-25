@@ -50,24 +50,34 @@ def match():
 
     parent_data = request.json
     if 'ethnicity' in parent_data:
-        parent_data['ethnicity'] = ethnicities.index(parent_data['ethnicity'])
+        parent_data['ethnicity'] = ethnicities.index(parent_data['ethnicity'].lower())
 
-    parent_df = pd.DataFrame(parent_data, index=[0])
+    # Assuming parent_df columns are named correctly as per the model's training data
+    parent_df = pd.DataFrame([parent_data])
 
-    # Concatenate parent data with available adoptees
-    combined_data = pd.concat([parent_df] * len(df_adoptees), ignore_index=True)
-    combined_data = pd.concat([combined_data, df_adoptees], axis=1)
+    # Rename parent_df columns to match the suffixing as in training data for adult attributes
+    parent_df.columns = [f'Adult {col}' for col in parent_df.columns]
+
+    # Renaming df_adoptees columns to match the suffixing as in training data for kid attributes
+    df_adoptees.columns = [f'Kid {col}' for col in df_adoptees.columns]
+
+    # Concatenate parent data with each adoptee data
+    combined_data = pd.concat([df_adoptees.assign(**parent_df.iloc[0])], axis=1)
+
     # Predict compatibility
     predictions = model.predict(combined_data)
+
     # Filter adoptees with compatibility = 1
-    compatible_adoptees = df_adoptees[predictions == 1]
-    # Randomly select a compatible adoptee if multiple exist
-    if len(compatible_adoptees) > 0:
+    compatible_adoptees = combined_data[predictions == 1]
+    if not compatible_adoptees.empty:
         selected_adoptee = compatible_adoptees.sample(n=1)
         selected_adoptee_dict = selected_adoptee.to_dict(orient='records')[0]
-        response = {'adoptee_info': selected_adoptee_dict, 'status_code': 200}
+        child_data = {key: value for key, value in selected_adoptee_dict.items() if key.startswith('Kid ')}
+
+        response = {'adoptee_info': child_data, 'status_code': 200}
     else:
         response = {'message': 'No compatible adoptees found', 'status_code': 404}
+
     return jsonify(response)
 
 if __name__ == '__main__':

@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import { InputErrorMessage } from "./InputErrorMessage";
 import { InputProps } from "@/types";
+import { cn } from "@/lib/utils";
 
 export const Input: FC<InputProps> = ({
     label,
@@ -9,12 +10,13 @@ export const Input: FC<InputProps> = ({
     name,
     placeholder,
     errors,
+    className
 }) => {
     const { register } = useFormContext();
 
     return (
         <div>
-            <div className="flex flex-col w-min items-start">
+            <div className={cn("flex flex-col w-min items-start", className)}>
                 <label htmlFor={name} className="form__label w-max">
                     {label}
                 </label>

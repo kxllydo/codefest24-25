@@ -72,7 +72,8 @@ def match():
     if not compatible_adoptees.empty:
         selected_adoptee = compatible_adoptees.sample(n=1)
         selected_adoptee_dict = selected_adoptee.to_dict(orient='records')[0]
-        child_data = {key: value for key, value in selected_adoptee_dict.items() if key.startswith('Kid ')}
+        child_data = {key.replace('Kid ', ''): value for key, value in selected_adoptee_dict.items() if key.startswith('Kid ')}
+
 
         response = {'adoptee_info': child_data, 'status_code': 200}
     else:

@@ -1,3 +1,5 @@
+/*
+
 // Step 3: Import AWS SDK and Initialize AWS Service Clients
 const AWS = require('aws-sdk');
 
@@ -32,3 +34,8 @@ sagemaker.invokeEndpoint(params, function(err, data) {
         console.log("Inference Result:", data.Body.toString('utf-8')); // Assuming the response body is a JSON string
     }
 });
+
+---------------------------------------
+Im commenting out this code because we are using python instead of js for backend but Im keeping it here just in case
+use sagemaker-interacter.py instead
+*/

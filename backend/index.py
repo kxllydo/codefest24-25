@@ -18,16 +18,16 @@ def api():
 df_adoptees = pd.read_csv('available_adoptees.csv')
 
 ethnicities = [
-    'African American',  # 0
-    'Arab',              # 1
-    'Asian',             # 2
-    'Caribbean',         # 3
-    'Caucasian',         # 4
-    'Hispanic/Latino',   # 5
-    'Indigenous',        # 6
-    'Middle Eastern',    # 7
-    'Native American',   # 8
-    'Pacific Islander'   # 9
+    'african_american',  # 0
+    'arab',              # 1
+    'asian',             # 2
+    'caribbean',         # 3
+    'caucasian',         # 4
+    'hispanic_Latino',   # 5
+    'indigenous',        # 6
+    'middle_eastern',    # 7
+    'native_american',   # 8
+    'pacific_islander'   # 9
 ]
 
 @app.route('/match', methods=['POST'])
@@ -50,20 +50,17 @@ def match():
 
     parent_data = request.json
     if 'ethnicity' in parent_data:
-        parent_data['ethnicity'] = ethnicities.index(parent_data['ethnicity'].capitalize())
+        parent_data['ethnicity'] = ethnicities.index(parent_data['ethnicity'])
 
     parent_df = pd.DataFrame(parent_data, index=[0])
 
     # Concatenate parent data with available adoptees
     combined_data = pd.concat([parent_df] * len(df_adoptees), ignore_index=True)
     combined_data = pd.concat([combined_data, df_adoptees], axis=1)
-
     # Predict compatibility
     predictions = model.predict(combined_data)
-
     # Filter adoptees with compatibility = 1
     compatible_adoptees = df_adoptees[predictions == 1]
-
     # Randomly select a compatible adoptee if multiple exist
     if len(compatible_adoptees) > 0:
         selected_adoptee = compatible_adoptees.sample(n=1)

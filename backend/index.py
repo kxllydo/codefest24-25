@@ -17,6 +17,19 @@ def api():
 
 df_adoptees = pd.read_csv('available_adoptees.csv')
 
+ethnicities = [
+    'African American',  # 0
+    'Arab',              # 1
+    'Asian',             # 2
+    'Caribbean',         # 3
+    'Caucasian',         # 4
+    'Hispanic/Latino',   # 5
+    'Indigenous',        # 6
+    'Middle Eastern',    # 7
+    'Native American',   # 8
+    'Pacific Islander'   # 9
+]
+
 @app.route('/match', methods=['POST'])
 def match():
     #data = request.json
@@ -36,6 +49,9 @@ def match():
     #find the first child that yields 1 for teh classifciation
 
     parent_data = request.json
+    if 'ethnicity' in parent_data:
+        parent_data['ethnicity'] = ethnicities.index(parent_data['ethnicity'].capitalize())
+
     parent_df = pd.DataFrame(parent_data, index=[0])
 
     # Concatenate parent data with available adoptees
@@ -58,4 +74,4 @@ def match():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(port=3001)
+    app.run(port=3001, debug=True)

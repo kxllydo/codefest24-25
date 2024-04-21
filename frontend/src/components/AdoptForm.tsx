@@ -76,7 +76,14 @@ const AdoptForm = () => {
     return (
         <>
             {submitted && (
-                <motion.div>
+                <motion.div
+                    initial={{ opacity: 0, y: 150 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{
+                        delay: 0.5,
+                        duration: 1,
+                        ease: [0, 0.71, 0.2, 1.01]
+                    }}>
                     {result?.adoptee_info ?
                         <>
                             <Card
@@ -123,6 +130,10 @@ const AdoptForm = () => {
                                             <DataList.Value>{result.adoptee_info.Disability === 0 ? "No" : "Yes"}</DataList.Value>
                                         </DataList.Item>
                                     </DataList.Root>
+                                </div>
+                                <Separator className="m-4 !w-[-webkit-fill-available]" />
+                                <div>
+                                    <span>{"We'll contact you soon with the followup procedures"}</span>
                                 </div>
                             </Card>
                         </>

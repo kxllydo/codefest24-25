@@ -76,7 +76,10 @@ def match():
         selected_adoptee = compatible_adoptees.sample(n=1)
         selected_adoptee_dict = selected_adoptee.to_dict(orient='records')[0]
         child_data = {key.replace('Kid ', '').replace(" ", ""): value for key, value in selected_adoptee_dict.items() if key.startswith('Kid ')}
-        postal_code = child_data.get("Location")  # assuming "Location" has the postal code
+        if 'Ethnicity' in child_data:
+            ethnicity_index = child_data['Ethnicity']
+            child_data['Ethnicity'] = ethnicities[ethnicity_index] if ethnicity_index < len(ethnicities) else 'Unknown'
+        postal_code = child_data.get("Location")
         if postal_code:
             location = geolocator.geocode(f"{postal_code}, USA")  # Assuming USA, adjust as necessary
             if location:

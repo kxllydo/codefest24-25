@@ -1,5 +1,25 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import african_american_f from "../../../images/african_american_f.jpeg";
+import african_american_m from "../../../images/african_american_m.jpeg";
+import arab_f from "../../../images/arab_f.jpeg";
+import arab_m from "../../../images/arab_m.jpeg";
+import asian_f from "../../../images/asian_f.jpeg";
+import asian_m from "../../../images/asian_m.jpeg";
+import caribbean_f from "../../../images/caribbean_f.jpeg";
+import caribbean_m from "../../../images/caribbean_m.jpeg";
+import caucasian_f from "../../../images/caucasian_f.jpeg";
+import caucasian_m from "../../../images/caucasian_m.jpeg";
+import hispanic_latino_f from "../../../images/hispanic_latino_f.jpeg";
+import hispanic_latino_m from "../../../images/hispanic_latino_m.jpeg";
+import indigenous_f from "../../../images/indigenous_f.jpeg";
+import indigenous_m from "../../../images/indigenous_m.jpeg";
+import middle_eastern_f from "../../../images/middle_eastern_f.jpeg";
+import middle_eastern_m from "../../../images/middle_eastern_m.jpeg";
+import native_american_f from "../../../images/native_american_f.jpeg";
+import native_american_m from "../../../images/native_american_m.jpeg";
+import pacific_islander_f from "../../../images/pacific_islander_f.jpeg";
+import pacific_islander_m from "../../../images/pacific_islander_m.jpeg";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
@@ -95,3 +115,27 @@ export const ethnicityOptions = [
         label: "Pacific Islander",
     }
 ];
+
+export const getImage = (ethnicity: string, gender: string) => {
+    if (ethnicity.toLowerCase() === "african_american") {
+        return gender.toLowerCase() === "female" ? african_american_f : african_american_m;
+    } else if (ethnicity.toLowerCase() === "arab") {
+        return gender.toLowerCase() === "female" ? arab_f : arab_m;
+    } else if (ethnicity.toLowerCase() === "asian") {
+        return gender.toLowerCase() === "female" ? asian_f : asian_m;
+    } else if (ethnicity.toLowerCase() === "caribbean") {
+        return gender.toLowerCase() === "female" ? caribbean_f : caribbean_m;
+    } else if (ethnicity.toLowerCase() === "caucasian") {
+        return gender.toLowerCase() === "female" ? caucasian_f : caucasian_m;
+    } else if (ethnicity.toLowerCase() === "hispanic_latino") {
+        return gender.toLowerCase() === "female" ? hispanic_latino_f : hispanic_latino_m;
+    } else if (ethnicity.toLowerCase() === "indigenous") {
+        return gender.toLowerCase() === "female" ? indigenous_f : indigenous_m;
+    } else if (ethnicity.toLowerCase() === "middle_eastern") {
+        return gender.toLowerCase() === "female" ? middle_eastern_f : middle_eastern_m;
+    } else if (ethnicity.toLowerCase() === "native_american") {
+        return gender.toLowerCase() === "female" ? native_american_f : native_american_m;
+    } else if (ethnicity.toLowerCase() === "pacific_islander") {
+        return gender.toLowerCase() === "female" ? pacific_islander_f : pacific_islander_m;
+    }
+}

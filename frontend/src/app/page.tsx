@@ -12,7 +12,7 @@ import family1 from '../../public/family1.jpg';
 import family2 from '../../public/family2.jpeg';
 import logo from "../../public/logo.png";
 import Features from "@/components/Features";
-import { AreaChart, Cog, SquareUserRound } from "lucide-react";
+import { AreaChart, Cog, SquareUserRound, Verified } from "lucide-react";
 
 const OPTIONS: EmblaOptionsType = { loop: true }
 const SLIDE_COUNT = 5
@@ -103,8 +103,8 @@ export default function Home() {
                             size={{
                                 initial: "2"
                             }}>
-                            <div className="flex font-bold"><SquareUserRound className="mr-2" />{"Customized Filtering Options"}</div>
-                            <Text>{"Our platform offers advanced filtering options for both children and adults, allowing you to narrow down your search based on specific criteria such as age, gender, ethnicity, location, and more."}</Text>
+                            <div className="flex font-bold"><Verified className="mr-2" />{"Verified Profiles"}</div>
+                            <Text>{"Implement a verification process to ensure the authenticity of user profiles, enhancing trust and credibility within the community."}</Text>
                         </Card>
                     </Grid>
                     <Separator className="opacity-0 m-4" />

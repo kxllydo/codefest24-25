@@ -762,3 +762,16 @@ backend/dateutil/tz/__pycache__/_common.cpython-312.pyc
 backend/dateutil/tz/__pycache__/_factories.cpython-312.pyc
 backend/dateutil/tz/__pycache__/tz.cpython-312.pyc
 backend/dateutil/tz/__pycache__/win.cpython-312.pyc
+backend/__pycache__/six.cpython-312.pyc
+backend/dateutil/__pycache__/__init__.cpython-312.pyc
+backend/dateutil/__pycache__/_common.cpython-312.pyc
+backend/dateutil/__pycache__/_version.cpython-312.pyc
+backend/dateutil/__pycache__/relativedelta.cpython-312.pyc
+backend/dateutil/parser/__pycache__/__init__.cpython-312.pyc
+backend/dateutil/parser/__pycache__/_parser.cpython-312.pyc
+backend/dateutil/parser/__pycache__/isoparser.cpython-312.pyc
+backend/dateutil/tz/__pycache__/__init__.cpython-312.pyc
+backend/dateutil/tz/__pycache__/_common.cpython-312.pyc
+backend/dateutil/tz/__pycache__/_factories.cpython-312.pyc
+backend/dateutil/tz/__pycache__/tz.cpython-312.pyc
+backend/dateutil/tz/__pycache__/win.cpython-312.pyc

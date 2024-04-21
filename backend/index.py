@@ -52,9 +52,10 @@ def match():
     if len(compatible_adoptees) > 0:
         selected_adoptee = compatible_adoptees.sample(n=1)
         selected_adoptee_dict = selected_adoptee.to_dict(orient='records')[0]
-        return jsonify(selected_adoptee_dict)
+        response = {'adoptee_info': selected_adoptee_dict, 'status_code': 200}
     else:
-        return jsonify({'message': 'No compatible adoptees found'})
+        response = {'message': 'No compatible adoptees found', 'status_code': 404}
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(port=3001)

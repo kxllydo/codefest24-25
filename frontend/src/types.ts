@@ -21,6 +21,7 @@ export interface InputProps extends InputErrorProps {
     type?: "text" | "email" | "time" | "number" | "checkbox";
     placeholder?: string;
     showName: string;
+    className?: string;
 }
 
 export interface SelectProps extends InputProps {

@@ -22,7 +22,7 @@ export default function Home() {
         <>
             <Container className="p-8">
                 <Backdrop />
-                <div className="flex flex-col w-[-webkit-fill-available]">
+                <div className="flex flex-col w-[-webkit-fill-available] h-[-webkit-fill-available]">
                     <div className="flex flex-col items-center">
                         <div className="flex flex-row items-center ">
                             <Avatar
@@ -44,7 +44,7 @@ export default function Home() {
                                         xl: "9",
                                         initial: "9"
                                     }}>Adopteam</Heading>
-                                <p className="text-blue-300">
+                                <p className="text-blue-500">
                                     {"The world's #1 website to adopt"}
                                 </p>
                             </div>

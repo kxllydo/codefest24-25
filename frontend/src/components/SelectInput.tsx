@@ -20,11 +20,10 @@ export const SelectInput: FC<SelectProps> = ({
                 </label>
                 <select
                     {...register(name)}
-                    className={`form__input w-min ${Object.prototype.hasOwnProperty.call(errors, name) &&
+                    className={`form__input w-min rounded-lg border-2 border-solid border-purple-200 ${Object.prototype.hasOwnProperty.call(errors, name) &&
                         "border-red-500"
                         } `}
                 >
-                    <option value="">{showName}</option>
                     {options.map((item, index) => (
                         <option value={item.value} key={index}>
                             {item.label}

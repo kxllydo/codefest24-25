@@ -1,0 +1,41 @@
+/*
+
+// Step 3: Import AWS SDK and Initialize AWS Service Clients
+const AWS = require('aws-sdk');
+
+// Configure AWS credentials (make sure you have AWS credentials configured properly)
+AWS.config.update({ region: "us-east-1",accessKeyId: "ASIA3UBNHN72KZ43GRYM", secretAccessKey:"8kiN6+D3I7V7uSFFz0qvBVENM3q5yvm5ceAcv8GX" }); // Specify your AWS region
+// Optionally, you can specify credentials like this:
+// AWS.config.update({ region: 'your-region', accessKeyId: 'your-access-key', secretAccessKey: 'your-secret-key' });
+
+// Step 4: Use SageMaker Service Client
+const sagemaker = new AWS.SageMaker();
+
+// Step 5: Process Data and Interact with SageMaker
+const inputData = {
+    // Example input data
+    instances: [
+        {
+            data: [1.5, 2.3, 3.1, 4.2] // Example feature vector
+        }
+    ]
+};
+
+const params = {
+    EndpointName: 'your-endpoint-name', // Specify the name of your SageMaker endpoint
+    Body: JSON.stringify(inputData)
+};
+
+sagemaker.invokeEndpoint(params, function(err, data) {
+    if (err) {
+        console.log("Error invoking endpoint:", err);
+    } else {
+        // Step 6: Handle Responses from SageMaker
+        console.log("Inference Result:", data.Body.toString('utf-8')); // Assuming the response body is a JSON string
+    }
+});
+
+---------------------------------------
+Im commenting out this code because we are using python instead of js for backend but Im keeping it here just in case
+use sagemaker-interacter.py instead
+*/
